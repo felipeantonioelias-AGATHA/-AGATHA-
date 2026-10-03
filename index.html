@@ -295,35 +295,50 @@ block:'end'
 });
 }
 
-function reply(t){
+async function reply(t){
 
-const x=t.toLowerCase();
+    try {
 
-if(x.includes('olá')||x.includes('oi'))
-return'Olá! Estou aqui. 😊';
+        const response = await fetch(
+            "https://dawn-butterfly-00b9.felipeantonioelias.workers.dev/",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    message: t
+                })
+            }
+        );
 
-if(x.includes('quem é você'))
-return'Eu sou a ÁGATHA, seu assistente pessoal.';
+        const data = await response.json();
 
-if(x.includes('hora'))
-return'Eu posso usar a hora do dispositivo quando a integração correspondente estiver conectada.';
+        if (!response.ok) {
+            return "Desculpe, ocorreu um erro ao falar com meu cérebro de IA.";
+        }
 
-return'Recebi sua mensagem. Nesta versão instalável, a interface e a base do aplicativo estão prontas; o cérebro de IA ainda precisa ser conectado.';
-}
+        return data.answer || "Não consegui gerar uma resposta.";
 
-function send(){
+    } catch (error) {
 
-const t=input.value.trim();
+        console.error("Erro ao conectar com a ÁGATHA:", error);
 
-if(!t)return;
+        return "Não consegui me conectar ao meu cérebro de IA.";
 
-add(t,'u');
+async function send(){
 
-input.value='';
+    const t=input.value.trim();
 
-setTimeout(()=>{
-add(reply(t),'a');
-},250);
+    if(!t)return;
+
+    add(t,'u');
+
+    input.value='';
+
+    const resposta = await reply(t);
+
+    add(resposta,'a');
 
 }
 
