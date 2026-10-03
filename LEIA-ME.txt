@@ -1,0 +1,14 @@
+ÁGATHA v0.2 — pacote instalável (PWA)
+
+Este ZIP contém a versão instalável inicial da ÁGATHA.
+
+Arquivos:
+- index.html
+- manifest.json
+- sw.js
+
+Para instalar no Android como aplicativo, os arquivos precisam ser publicados em um endereço HTTPS. Depois, abra o endereço no Chrome e escolha “Adicionar à tela inicial” ou “Instalar app”.
+
+Esta versão inclui interface, conversa local simples e entrada de voz quando suportada pelo navegador.
+
+Importante: o modelo de IA ainda não está conectado. A conexão com a IA deve ser feita em uma etapa separada para não expor uma chave de API dentro do aplicativo.
