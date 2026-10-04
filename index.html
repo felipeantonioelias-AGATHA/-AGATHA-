@@ -406,6 +406,49 @@ message:message
 const data =
 await response.json();
 
+console.log("Status:", response.status);
+console.log("Resposta do Worker:", data);
+
+if(!response.ok){
+
+return (
+"ERRO DO WORKER:\n" +
+JSON.stringify(data)
+);
+
+}
+
+return (
+data.response ||
+"RESPOSTA VAZIA DO WORKER:\n" +
+JSON.stringify(data)
+);
+
+}catch(error){
+
+console.error(
+"Erro ao conectar com o Worker:",
+error
+);
+
+return (
+"ERRO DE CONEXÃO:\n" +
+error.message
+);
+
+}
+
+},
+
+body:JSON.stringify({
+message:message
+})
+}
+);
+
+const data =
+await response.json();
+
 
 if(!response.ok){
 
