@@ -351,6 +351,9 @@ document.getElementById("send");
 const micButton =
 document.getElementById("mic");
 
+const installBtn =
+document.getElementById("installBtn");
+
 
 /* ================================
    ADICIONAR MENSAGEM
@@ -406,8 +409,16 @@ message:message
 const data =
 await response.json();
 
-console.log("Status:", response.status);
-console.log("Resposta do Worker:", data);
+console.log(
+"Status do Worker:",
+response.status
+);
+
+console.log(
+"Resposta do Worker:",
+data
+);
+
 
 if(!response.ok){
 
@@ -418,11 +429,13 @@ JSON.stringify(data)
 
 }
 
+
 return (
 data.response ||
 "RESPOSTA VAZIA DO WORKER:\n" +
 JSON.stringify(data)
 );
+
 
 }catch(error){
 
@@ -434,57 +447,6 @@ error
 return (
 "ERRO DE CONEXÃO:\n" +
 error.message
-);
-
-}
-
-},
-
-body:JSON.stringify({
-message:message
-})
-}
-);
-
-const data =
-await response.json();
-
-
-if(!response.ok){
-
-console.error(
-"Erro retornado pelo Worker:",
-data
-);
-
-return (
-data.error ||
-"Desculpe, ocorreu um erro ao falar com meu cérebro de IA."
-);
-
-}
-
-
-/*
-O Worker da ÁGATHA devolve
-a resposta no campo "response".
-*/
-
-return (
-data.response ||
-"Não consegui gerar uma resposta."
-);
-
-
-}catch(error){
-
-console.error(
-"Erro ao conectar com o Worker:",
-error
-);
-
-return (
-"Não consegui me conectar ao meu cérebro de IA. Verifique sua conexão e tente novamente."
 );
 
 }
@@ -530,6 +492,8 @@ add(
 );
 
 
+/* Consulta a IA */
+
 const response =
 await reply(text);
 
@@ -561,8 +525,10 @@ input.focus();
    BOTÃO ENVIAR
 ================================ */
 
-sendButton.onclick =
-send;
+sendButton.addEventListener(
+"click",
+send
+);
 
 
 /* ================================
@@ -592,7 +558,9 @@ send();
    RECONHECIMENTO DE VOZ
 ================================ */
 
-micButton.onclick=()=>{
+micButton.addEventListener(
+"click",
+()=>{
 
 if(
 !("webkitSpeechRecognition" in window) &&
@@ -672,7 +640,8 @@ micButton.textContent="🎙️";
 
 recognition.start();
 
-};
+}
+);
 
 
 /* ================================
@@ -681,11 +650,6 @@ recognition.start();
 
 let deferredPrompt =
 null;
-
-const installBtn =
-document.getElementById(
-"installBtn"
-);
 
 
 window.addEventListener(
